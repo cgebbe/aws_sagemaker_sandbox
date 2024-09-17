@@ -1,5 +1,5 @@
-# sagemaker domain
-# see https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/sagemaker_domain
+# sagemaker role
+# (used chatGPTs)
 resource "aws_iam_role" "sagemaker_execution_role" {
   name = "my-sagemaker-role2"
 
@@ -46,14 +46,21 @@ resource "aws_iam_role_policy_attachment" "attach_sagemaker_policy" {
 }
 
 
+# sagemaker domain
+# see https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/sagemaker_domain
 resource "aws_sagemaker_domain" "example" {
   domain_name = "dev"
   auth_mode   = "IAM"
   vpc_id      = module.vpc.vpc_id
   subnet_ids  = module.vpc.private_subnets
 
+#   default_space_settings {
+#   }
+
   default_user_settings {
     execution_role = aws_iam_role.sagemaker_execution_role.arn
+    default_landing_uri = "studio::"
+    studio_web_portal = "ENABLED"
   }
 }
 
