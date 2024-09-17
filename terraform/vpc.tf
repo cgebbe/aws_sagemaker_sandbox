@@ -1,3 +1,4 @@
+# see https://registry.terraform.io/modules/terraform-aws-modules/vpc/aws/latest
 module "vpc" {
   source = "terraform-aws-modules/vpc/aws"
 
@@ -10,6 +11,7 @@ module "vpc" {
 
   enable_nat_gateway = true
   enable_vpn_gateway = true
+  single_nat_gateway  = true # NAT gateways cost something...
 
   tags = {
     Terraform = "true"
