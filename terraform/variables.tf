@@ -7,7 +7,7 @@ variable "app_name" {
   default = null
 }
 locals {
-  app_name = var.app_name == null ? "elliptio" : var.app_name
+  app_name = var.app_name == null ? "geb-sagemaker-studio" : var.app_name
 }
 
 # specify most variables in dotenv file
