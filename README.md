@@ -7,7 +7,7 @@ This repository holds code to
 
 # Instructions
 
-## setup sagemaker
+## setup sagemaker (with required VPC), ECR and EC2
 
 ```bash
 # setup resources
@@ -18,36 +18,60 @@ terraform apply
 # P: sets up "Sagemaker studio classic" by default (not sure whether changeable with terraform)
 # S: go to AWS console and MANUALLY "migrate" to new studio
 
-# in UI:
+# in UI: create a new project
 ```
 
 ## push docker to ECR
 
 Get access to a console with docker. Sagemaker studio by default does NOT provide docker, so these are possible alternatives:
 
-- EC2
-- Cloudshell (usually too little space)
+- Cloudshell - easy but usually too little space for docker images :/
+- EC2 - now included here!
 - Sagemaker Notebook Classic
-- Sagemaker Studio local mode, see https://docs.aws.amazon.com/sagemaker/latest/dg/studio-updated-local.html
+- Sagemaker Studio local mode, but seems a bit tricky to setup, see https://docs.aws.amazon.com/sagemaker/latest/dg/studio-updated-local.html
 
 ```bash
-# enable docker access
-DOMAIN_ID=d-yvzkfjpbxwx1
-REGION=eu-west-1
-aws --region $REGION sagemaker update-domain --domain-id $DOMAIN_ID --domain-settings-for-update '{"DockerSettings": {"EnableDockerAccess": "ENABLED"}}'
+# install docker
+curl -fsSL https://get.docker.com -o get-docker.sh
+sh get-docker.sh
+
+# install AWS CLI
+sudo apt install -y unzip
+curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "awscliv2.zip"
+unzip awscliv2.zip
+sudo ./aws/install
+
+# login to ECR registry (note the sudo!)
+ECR_URL=... # get from terraform output
+aws ecr get-login-password --region eu-west-1 | sudo docker login --username AWS --password-stdin $ECR_URL
+
+# run docker image and check jupyter kernel
+# IMAGE=pytorch/pytorch:2.4.1-cuda11.8-cudnn9-runtime # doesn't have Jupyter kernel
+# NOTE: default sagemaker image has 3.10.14
+IMAGE=jupyter/scipy-notebook:x86_64-python-3.11.6
+sudo docker run --rm -it --entrypoint=bash $IMAGE
+jupyter-kernelspec list
+#   python3    /opt/conda/share/jupyter/kernels/python3
+
+# tag and build docker
+DST_IMAGE=$ECR_URL:20240917_v1
+echo $DST_IMAGE
+sudo docker tag $IMAGE $DST_IMAGE
+sudo docker push $DST_IMAGE
 ```
 
-```bash
-# login to ECR registry (get command from AWS UI)
-aws ecr get-login-password --region eu-west-1 | docker login --username AWS --password-stdin ...
+# Import image into SageMaker studio classic (UI or CLI)
 
-# build doocker
-```
+- see https://docs.aws.amazon.com/sagemaker/latest/dg/studio-byoi-create.html and following pages
 
-# Alternative: build docker
+As ApplicationType select `SageMaker studio classic` !
 
-- see requirements for docker at https://docs.aws.amazon.com/sagemaker/latest/dg/studio-updated-jl-image-specifications.html
+# Import image into SageMaker studio new (UI or CLI)
 
-# "import" docker image to SageMaker
+- follow https://docs.aws.amazon.com/sagemaker/latest/dg/studio-updated-migrate-lcc.html
 
-- see https://stackoverflow.com/questions/75617926/failed-to-launch-app-from-custom-sagemaker-image-resourcenotfounderror-with-uid
+As ApplicationType select e.g. `Jupyterlab image` !
+
+# delete all created resources
+
+- see https://github.com/rebuy-de/aws-nuke

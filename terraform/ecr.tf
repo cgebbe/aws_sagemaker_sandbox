@@ -5,7 +5,10 @@ module "ecr" {
   repository_name = "private-example"
 
 #   repository_read_write_access_arns = ["arn:aws:iam::012345678901:role/terraform"]
-  repository_read_write_access_arns = [aws_iam_role.sagemaker_execution_role.arn]
+  repository_read_write_access_arns = [
+    aws_iam_role.sagemaker_execution_role.arn,
+    # module.ec2_instance.iam_role_arn, # null value?!
+  ]
   repository_lifecycle_policy = jsonencode({
     rules = [
       {
