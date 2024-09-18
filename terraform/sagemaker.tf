@@ -27,10 +27,12 @@ resource "aws_sagemaker_user_profile" "example" {
 
 
 # space
-resource "aws_sagemaker_space" "example" {
-  domain_id  = aws_sagemaker_domain.example.id
-  space_name = "example"
-}
+# NOTE: this seems to create collab studio classic space
+# instead of personal new studio space?!  
+# resource "aws_sagemaker_space" "example" {
+#   domain_id  = aws_sagemaker_domain.example.id
+#   space_name = "example"
+# }
 
 # app - need to specify storage details for JupyterLab ?!
 # resource "aws_sagemaker_app" "example" {
