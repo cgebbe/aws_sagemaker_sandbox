@@ -22,6 +22,13 @@ RUN pip install amazon-sagemaker-jupyter-scheduler
 # Better alternative might be uv setup?!
 RUN yum install --assumeyes gcc python3-devel python3-setuptools python3-pip-wheel python3-wheel
 RUN pip install sagemaker-training
+RUN pip install sagemaker
+RUN pip install sagemaker-headless-execution-driver
+
+# install sudo
+RUN yum install --assumeyes sudo which
+RUN echo "${NB_USER} ALL=(ALL) NOPASSWD:ALL" >> /etc/sudoers
+ENV USER=$NB_USER
 
 WORKDIR "/home/${NB_USER}"
 

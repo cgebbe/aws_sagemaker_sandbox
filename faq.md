@@ -92,7 +92,7 @@ CMD jupyter lab --ip 0.0.0.0 --port 8888 \
 
 When using default SM image, we have notebook job feature and these packages
 
-```
+```bash
 amazon-q-developer-jupyterlab-ext       3.2.0
 amazon_sagemaker_jupyter_ai_q_developer 1.0.7
 amazon_sagemaker_jupyter_scheduler      3.1.2
@@ -148,9 +148,43 @@ When adding `sagemaker-training`
 
 When adding `WORKDIR`
 
-- ...
+- same error
 
-When referencing https://github.com/aws/sagemaker-distribution/blob/main/template/v2/Dockerfile
+When adding `pip install sagemaker` based on https://github.com/aws/sagemaker-python-sdk/pull/4270/files
+
+- same error
+
+Do I need to downgrade `amazon-sagemaker-jupyter-scheduler to 2.*` ?!
+
+- Sources
+  - https://stackoverflow.com/q/78333128
+  - https://stackoverflow.com/a/78363355
+- check against official docker `docker run --rm -it --entrypoint=bash public.ecr.aws/sagemaker/sagemaker-distribution:1.10.1-cpu`
+  - there, we have a `amazon_sagemaker_scheduler` as CLI. Why not installed above?!
+  - Ah, because it's in `sagemaker_headless_execution`... -> add that
+- P: `amazon_sagemaker_scheduler` requires sudo, docker image doesn't have it
+  - S: add it based on template SM Dockerfile https://github.com/aws/sagemaker-distribution/blob/main/template/v2/Dockerfile
+- Result
+  - ...
+
+```bash
+# sagemaker packages in bash public.ecr.aws/sagemaker/sagemaker-distribution:1.10.1-cpu
+amazon_sagemaker_jupyter_ai_q_developer 1.0.9
+amazon_sagemaker_jupyter_scheduler      3.1.5
+amazon-sagemaker-sql-editor             0.1.11
+amazon-sagemaker-sql-execution          0.1.6
+amazon-sagemaker-sql-magic              0.1.3
+sagemaker                               2.227.0
+sagemaker-headless-execution-driver     0.0.13
+sagemaker-jupyterlab-emr-extension      0.3.3
+sagemaker-jupyterlab-extension          0.3.2  # some improvements
+sagemaker-jupyterlab-extension-common   0.1.21
+sagemaker-kernel-wrapper                0.0.4
+sagemaker-studio-analytics-extension    0.1.2
+sagemaker-studio-sparkmagic-lib         0.1.4
+```
+
+Next Problem: `which` command not found :/
 
 - ...
 

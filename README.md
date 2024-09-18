@@ -37,7 +37,7 @@ terraform apply
 ```bash
 # build docker...
 cd /path/to/Dockerfile
-IMAGE=studio-jupyter-v4-with-workdir
+IMAGE=studio-jupyter-v7-with-headless-and-sudo
 docker build -t $IMAGE .
 
 # ...or use existing
@@ -46,6 +46,7 @@ IMAGE=jupyter/scipy-notebook:x86_64-python-3.11.6
 # check name of jupyter kernel (required when attaching in SM!)
 docker run --rm -it --entrypoint=bash $IMAGE
 jupyter-kernelspec list
+amazon_sagemaker_scheduler
 #   python3    /opt/conda/share/jupyter/kernels/python3  for jupyter/scipy
 #   python3    /usr/local/share/jupyter/kernels/python3  for built docker
 ```
