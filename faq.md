@@ -88,7 +88,7 @@ CMD jupyter lab --ip 0.0.0.0 --port 8888 \
 
 # Using the new Studio jupyter lab...
 
-When using default image (), we have notebook job feature and these libs
+When using default SM image, we have notebook job feature and these packages
 
 ```
 amazon-q-developer-jupyterlab-ext       3.2.0
@@ -131,6 +131,11 @@ When addding `pip install amazon-sagemaker-jupyter-scheduler`
 
 - we have notebook job button, but Additional Option error `Unexpected token '<', "<!DOCTYPE "... is not valid JSON`
 - -> maybe beause I installed a very old version? (2.2.19 instead of 3.1.2?!)
+
+When using amazon-linux/2023 docker image
+
+- could at least install newer jupyter-scheduler version and python3.9
+- get notebook job button -> works :) !
 
 # Using the Classic Studio jupyter lab...
 

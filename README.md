@@ -37,7 +37,7 @@ terraform apply
 ```bash
 # build docker...
 cd /path/to/Dockerfile
-IMAGE=studio-jupyter-v1-with-scheduler
+IMAGE=studio-jupyter-v2-with-amazon-2023
 docker build -t $IMAGE .
 
 # ...or use existing

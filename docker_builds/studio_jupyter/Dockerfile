@@ -1,19 +1,21 @@
-FROM public.ecr.aws/amazonlinux/amazonlinux:2
+# NOTE: use 2023 image to get python3.9 instead of python3.7
+# FROM public.ecr.aws/amazonlinux/amazonlinux:2
+FROM public.ecr.aws/amazonlinux/amazonlinux:2023
 
 ARG NB_USER="sagemaker-user"
 ARG NB_UID="1000"
 ARG NB_GID="100"
-RUN yum install --assumeyes python3 shadow-utils && \
+RUN yum install --assumeyes python3-pip shadow-utils && \
     useradd --create-home --shell /bin/bash --gid "${NB_GID}" --uid ${NB_UID} ${NB_USER} && \
     yum clean all && \
-    python3 -m pip install jupyterlab
+    pip install jupyterlab
 
-RUN python3 -m pip install --upgrade pip
+# RUN python3 -m pip install --upgrade pip
 
-RUN python3 -m pip install --upgrade urllib3==1.26.6
+# RUN python3 -m pip install --upgrade urllib3==1.26.6
 
 # NOTE: add amazon-sagemaker-jupyter-scheduler to get notebook job button
-RUN python3 -m pip install amazon-sagemaker-jupyter-scheduler
+RUN pip install amazon-sagemaker-jupyter-scheduler
 
 USER ${NB_UID}
 CMD jupyter lab --ip 0.0.0.0 --port 8888 \
