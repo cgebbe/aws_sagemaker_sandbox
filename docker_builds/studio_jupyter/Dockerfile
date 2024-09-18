@@ -12,6 +12,9 @@ RUN python3 -m pip install --upgrade pip
 
 RUN python3 -m pip install --upgrade urllib3==1.26.6
 
+# NOTE: add amazon-sagemaker-jupyter-scheduler to get notebook job button
+RUN python3 -m pip install amazon-sagemaker-jupyter-scheduler
+
 USER ${NB_UID}
 CMD jupyter lab --ip 0.0.0.0 --port 8888 \
   --ServerApp.base_url="/jupyterlab/default" \

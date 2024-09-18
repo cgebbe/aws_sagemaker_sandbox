@@ -21,12 +21,23 @@ terraform apply
 # in UI: create a new project
 ```
 
+## setup sagemaker jobs
+
+- https://docs.aws.amazon.com/sagemaker/latest/dg/scheduled-notebook-installation.html
+  - now in the terraform code which is applied above, works!
+- https://docs.aws.amazon.com/sagemaker/latest/dg/notebook-auto-run-constraints.html
+  - lists requirements for docker image
+- https://aws.amazon.com/sagemaker/pricing/
+  - price per available instances
+  - use `ml.t3.large` or `ml.t3.medium` are cheapest, but not available
+  - `ml.m5.large` only 0.128 USD and available 30x
+
 ## build and check docker image
 
 ```bash
 # build docker...
 cd /path/to/Dockerfile
-IMAGE=studio-jupyter-v0
+IMAGE=studio-jupyter-v1-with-scheduler
 docker build -t $IMAGE .
 
 # ...or use existing

@@ -88,11 +88,49 @@ CMD jupyter lab --ip 0.0.0.0 --port 8888 \
 
 # Using the new Studio jupyter lab...
 
+When using default image (), we have notebook job feature and these libs
+
+```
+amazon-q-developer-jupyterlab-ext       3.2.0
+amazon_sagemaker_jupyter_ai_q_developer 1.0.7
+amazon_sagemaker_jupyter_scheduler      3.1.2
+hdijupyterutils                         0.21.0
+jupyter                                 1.0.0
+jupyter_ai                              2.20.0
+jupyter_ai_magics                       2.20.0
+jupyter_client                          8.6.2
+jupyter_collaboration                   1.1.0
+jupyter-console                         6.6.3
+jupyter_core                            5.7.2
+jupyter-dash                            0.4.2
+jupyter-events                          0.6.3
+jupyter-lsp                             2.2.5
+jupyter_scheduler                       2.7.1
+jupyter_server                          2.10.0
+jupyter_server_fileid                   0.9.2
+jupyter-server-mathjax                  0.2.6
+jupyter_server_proxy                    4.3.0
+jupyter_server_terminals                0.5.3
+jupyter-ydoc                            1.1.1
+jupyterlab                              4.1.6
+jupyterlab_git                          0.50.1
+jupyterlab-lsp                          5.0.3
+jupyterlab_pygments                     0.3.0
+jupyterlab_server                       2.24.0
+jupyterlab_widgets                      3.0.11
+sagemaker-jupyterlab-emr-extension      0.3.2
+sagemaker-jupyterlab-extension          0.3.2
+sagemaker-jupyterlab-extension-common   0.1.19
+```
+
 When using custom images, do we have notebook feature?
 
 - No, doesn't seem to be the case.
-- Likely need to `pip install amazon-sagemaker-jupyter-scheduler`, maybe more?!
-- hmm... but also not with default image?! Likely need to install more https://docs.aws.amazon.com/sagemaker/latest/dg/scheduled-notebook-installation.html
+
+When addding `pip install amazon-sagemaker-jupyter-scheduler`
+
+- we have notebook job button, but Additional Option error `Unexpected token '<', "<!DOCTYPE "... is not valid JSON`
+- -> maybe beause I installed a very old version? (2.2.19 instead of 3.1.2?!)
 
 # Using the Classic Studio jupyter lab...
 
