@@ -63,6 +63,8 @@ USER ${NB_UID}
 - for RStudio
   - https://docs.aws.amazon.com/sagemaker/latest/dg/rstudio-byoi-specs.html
 
+See minimal Dockerfile below and Dockerfile of default image at https://github.com/aws/sagemaker-distribution/blob/f4f15e79668b4af0b5203b3704c6478c04f89d60/template/v2/Dockerfile
+
 ```Dockerfile
 # not only ipykernel, but full jupyterlab!
 FROM public.ecr.aws/amazonlinux/amazonlinux:2
@@ -132,10 +134,21 @@ When addding `pip install amazon-sagemaker-jupyter-scheduler`
 - we have notebook job button, but Additional Option error `Unexpected token '<', "<!DOCTYPE "... is not valid JSON`
 - -> maybe beause I installed a very old version? (2.2.19 instead of 3.1.2?!)
 
-When using amazon-linux/2023 docker image
+When using amazon-linux/2023 docker image with newer package versions
 
 - could at least install newer jupyter-scheduler version and python3.9
-- get notebook job button -> works :) !
+- get notebook job button and can start, but notebook fails with error `exec amazon_sagemaker_scheduler failed: No such file or directory`
+- -> `pip install sagemaker-training` from https://github.com/aws/sagemaker-python-sdk/issues/4113
+
+When adding `sagemaker-training`
+
+- WARNING: sagemaker training limits protobuf, might conflict!
+  - see https://github.com/aws/sagemaker-training-toolkit/blob/master/setup.py
+- still same error :/
+
+When referencing https://github.com/aws/sagemaker-distribution/blob/main/template/v2/Dockerfile
+
+- ...
 
 # Using the Classic Studio jupyter lab...
 

@@ -37,7 +37,7 @@ terraform apply
 ```bash
 # build docker...
 cd /path/to/Dockerfile
-IMAGE=studio-jupyter-v2-with-amazon-2023
+IMAGE=studio-jupyter-v3-with-sagemaker-training
 docker build -t $IMAGE .
 
 # ...or use existing
@@ -72,8 +72,8 @@ curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "awscliv2.zip
 unzip awscliv2.zip
 sudo ./aws/install
 
-# login to ECR registry
-ECR_URL=561130499334.dkr.ecr.eu-west-1.amazonaws.com/private-example # get from terraform output
+# login to ECR registry (get URL from terraform output)
+ECR_URL=561130499334.dkr.ecr.eu-west-1.amazonaws.com/private-example
 aws ecr get-login-password --region eu-west-1 | docker login --username AWS --password-stdin $ECR_URL
 
 # tag and build docker

@@ -17,6 +17,11 @@ RUN yum install --assumeyes python3-pip shadow-utils && \
 # NOTE: add amazon-sagemaker-jupyter-scheduler to get notebook job button
 RUN pip install amazon-sagemaker-jupyter-scheduler
 
+# NOTE: sagemaker-training doesn't have a wheel :/
+# Better alternative might be uv setup?!
+RUN yum install --assumeyes gcc python3-devel python3-setuptools python3-pip-wheel python3-wheel
+RUN pip install sagemaker-training
+
 USER ${NB_UID}
 CMD jupyter lab --ip 0.0.0.0 --port 8888 \
   --ServerApp.base_url="/jupyterlab/default" \
