@@ -44,7 +44,7 @@ module "ec2_instance" {
   name = "single-instance"
 
   create_iam_instance_profile = true
-  iam_role_path = aws_iam_role.sagemaker_execution_role.arn
+  iam_role_path = aws_iam_role.sagemaker_execution_role.path
 
   # NOTE: Pick AMI from https://eu-west-1.console.aws.amazon.com/ec2/home?region=eu-west-1#AMICatalog:
   # HERE: ubuntu 24 LTS (amazon linux 2023 proved difficult for docker)
