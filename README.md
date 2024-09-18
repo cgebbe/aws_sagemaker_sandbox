@@ -37,7 +37,7 @@ terraform apply
 ```bash
 # build docker...
 cd /path/to/Dockerfile
-IMAGE=studio-jupyter-v7-with-headless-and-sudo
+IMAGE=studio-jupyter-v8-with-which
 docker build -t $IMAGE .
 
 # ...or use existing

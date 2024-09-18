@@ -186,12 +186,19 @@ sagemaker-studio-sparkmagic-lib         0.1.4
 
 Next Problem: `which` command not found :/
 
-- ...
+- add which
+
+Next problem: `which: no python in (/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin)`
+
+- add a symlink or something...
 
 # Using the Classic Studio jupyter lab...
 
 When using custom images, do we have notebook feature?
 
 - NOTE: After attaching image, need to stop and start space again!
-- job button visible
-- when click job button, some issue with additional options, so likely here also some service missing
+- yes, starts but then fails with error below
+
+P: `cp: cannot create regular file '/opt/ml/output/data/Untitled.ipynb': Permission denied`
+
+- ?!
