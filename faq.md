@@ -146,6 +146,10 @@ When adding `sagemaker-training`
   - see https://github.com/aws/sagemaker-training-toolkit/blob/master/setup.py
 - still same error :/
 
+When adding `WORKDIR`
+
+- ...
+
 When referencing https://github.com/aws/sagemaker-distribution/blob/main/template/v2/Dockerfile
 
 - ...

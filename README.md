@@ -37,7 +37,7 @@ terraform apply
 ```bash
 # build docker...
 cd /path/to/Dockerfile
-IMAGE=studio-jupyter-v3-with-sagemaker-training
+IMAGE=studio-jupyter-v4-with-workdir
 docker build -t $IMAGE .
 
 # ...or use existing

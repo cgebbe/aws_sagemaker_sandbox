@@ -5,6 +5,7 @@ FROM public.ecr.aws/amazonlinux/amazonlinux:2023
 ARG NB_USER="sagemaker-user"
 ARG NB_UID="1000"
 ARG NB_GID="100"
+
 RUN yum install --assumeyes python3-pip shadow-utils && \
     useradd --create-home --shell /bin/bash --gid "${NB_GID}" --uid ${NB_UID} ${NB_USER} && \
     yum clean all && \
@@ -21,6 +22,8 @@ RUN pip install amazon-sagemaker-jupyter-scheduler
 # Better alternative might be uv setup?!
 RUN yum install --assumeyes gcc python3-devel python3-setuptools python3-pip-wheel python3-wheel
 RUN pip install sagemaker-training
+
+WORKDIR "/home/${NB_USER}"
 
 USER ${NB_UID}
 CMD jupyter lab --ip 0.0.0.0 --port 8888 \
