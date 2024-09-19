@@ -12,6 +12,7 @@ resource "aws_iam_role" "sagemaker_execution_role" {
           Service = [
           "sagemaker.amazonaws.com",
           "ec2.amazonaws.com",
+          "events.amazonaws.com",
           ]
         },
         Action    = "sts:AssumeRole"
@@ -35,7 +36,12 @@ resource "aws_iam_policy" "sagemaker_policy" {
           "ecr:*",        # Optional: Access to Elastic Container Registry (ECR)
           "cloudwatch:*", # Optional: CloudWatch for logs/metrics
           "logs:*",
-          "iam:PassRole"  # Allows SageMaker to pass roles
+          "iam:PassRole", # Allows SageMaker to pass roles
+          # for notebook jobs, see https://docs.aws.amazon.com/sagemaker/latest/dg/scheduled-notebook-policies-studio.html
+          "events:*",
+          "ec2:*",
+          "ecr:*",
+          "kms:*",
         ],
         Resource = "*"
       }
