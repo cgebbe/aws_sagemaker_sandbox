@@ -37,7 +37,7 @@ terraform apply
 ```bash
 # build docker...
 cd /path/to/Dockerfile
-IMAGE=studio-jupyter-v8-with-which
+IMAGE=studio-jupyter-v9-with-python
 docker build -t $IMAGE .
 
 # ...or use existing
@@ -47,6 +47,7 @@ IMAGE=jupyter/scipy-notebook:x86_64-python-3.11.6
 docker run --rm -it --entrypoint=bash $IMAGE
 jupyter-kernelspec list
 amazon_sagemaker_scheduler
+which python
 #   python3    /opt/conda/share/jupyter/kernels/python3  for jupyter/scipy
 #   python3    /usr/local/share/jupyter/kernels/python3  for built docker
 ```

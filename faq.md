@@ -192,6 +192,11 @@ Next problem: `which: no python in (/usr/local/sbin:/usr/local/bin:/usr/sbin:/us
 
 - add a symlink or something...
 
+Next problem: `KeyError: 'SM_KERNEL_NAME'`
+
+- from https://github.com/aws/sagemaker-distribution/blob/main/template/v2/Dockerfile
+-
+
 # Using the Classic Studio jupyter lab...
 
 When using custom images, do we have notebook feature?
