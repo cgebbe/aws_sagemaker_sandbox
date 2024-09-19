@@ -2,43 +2,47 @@
 # FROM public.ecr.aws/amazonlinux/amazonlinux:2
 FROM public.ecr.aws/amazonlinux/amazonlinux:2023
 
+# setup user
 ARG NB_USER="sagemaker-user"
 ARG NB_UID="1000"
 ARG NB_GID="100"
+RUN yum install --assumeyes \
+  shadow-utils \
+  && useradd --create-home --shell /bin/bash --gid "${NB_GID}" --uid ${NB_UID} ${NB_USER}
 
-RUN yum install --assumeyes python3-pip shadow-utils && \
-    useradd --create-home --shell /bin/bash --gid "${NB_GID}" --uid ${NB_UID} ${NB_USER} && \
-    yum clean all && \
-    pip install jupyterlab
+# install required stuff
+RUN yum install --assumeyes \
+  sudo \
+  which \
+  gcc \
+  python3-pip \
+  python3-devel \
+  python3-setuptools \
+  python3-pip-wheel \
+  python3-wheel \
+  && yum clean all
 
-# RUN python3 -m pip install --upgrade pip
+# NOTE: sagemaker packages are only required for Jupyter notebook jobs
+RUN pip install jupyterlab \
+  amazon-sagemaker-jupyter-scheduler \
+  sagemaker \
+  sagemaker-training \
+  sagemaker-headless-execution-driver \
+  sagemaker-kernel-wrapper
 
-# RUN python3 -m pip install --upgrade urllib3==1.26.6
-
-# NOTE: add amazon-sagemaker-jupyter-scheduler to get notebook job button
-RUN pip install amazon-sagemaker-jupyter-scheduler
-
-# NOTE: sagemaker-training doesn't have a wheel :/
-# Better alternative might be uv setup?!
-RUN yum install --assumeyes gcc python3-devel python3-setuptools python3-pip-wheel python3-wheel
-RUN pip install sagemaker-training
-RUN pip install sagemaker
-RUN pip install sagemaker-headless-execution-driver
-
-# install sudo
-RUN yum install --assumeyes sudo which
-RUN echo "${NB_USER} ALL=(ALL) NOPASSWD:ALL" >> /etc/sudoers
-
-WORKDIR "/home/${NB_USER}"
-
-# add python
+# add python (not just python3)
 RUN ln -s /usr/bin/python3 /usr/bin/python
 
-RUN pip install sagemaker-kernel-wrapper
+# setup empty sudo password
+RUN echo "${NB_USER} ALL=(ALL) NOPASSWD:ALL" >> /etc/sudoers
 
-ENV SM_KERNEL_NAME=python
+# setup env variables
+ENV SM_KERNEL_NAME=python3
 ENV USER=$NB_USER
 USER ${NB_UID}
+WORKDIR "/home/${NB_USER}"
+
+# start jupyter lab
 CMD jupyter lab --ip 0.0.0.0 --port 8888 \
   --ServerApp.base_url="/jupyterlab/default" \
   --ServerApp.token='' \

@@ -37,7 +37,7 @@ terraform apply
 ```bash
 # build docker...
 cd /path/to/Dockerfile
-IMAGE=studio-jupyter-v12-with-kernel-env
+IMAGE=studio-jupyter-v13-clean
 docker build -t $IMAGE .
 
 # ...or use existing
