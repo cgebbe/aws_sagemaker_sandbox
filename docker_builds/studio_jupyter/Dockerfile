@@ -35,6 +35,8 @@ WORKDIR "/home/${NB_USER}"
 # add python
 RUN ln -s /usr/bin/python3 /usr/bin/python
 
+RUN pip install sagemaker-kernel-wrapper
+
 USER ${NB_UID}
 CMD jupyter lab --ip 0.0.0.0 --port 8888 \
   --ServerApp.base_url="/jupyterlab/default" \

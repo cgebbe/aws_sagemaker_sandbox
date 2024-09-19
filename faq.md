@@ -194,8 +194,21 @@ Next problem: `which: no python in (/usr/local/sbin:/usr/local/bin:/usr/sbin:/us
 
 Next problem: `KeyError: 'SM_KERNEL_NAME'`
 
+- couldn't find anything in reference Dockerfile above
+- install `sagemaker-kernel-wrapper` ?!
+
+```bash
+# full error traceback
++ /usr/bin/python -m sagemaker_headless_execution_driver.notebookrunner
+...
+Traceback (most recent call last):
+  File "/usr/local/lib/python3.9/site-packages/sagemaker_headless_execution_driver/notebookrunner.py", line 41, in run_notebook
+    kernel_name = os.environ["SM_KERNEL_NAME"]
+  File "/usr/lib64/python3.9/os.py", line 679, in __getitem__
+    raise KeyError(key) from None
+```
+
 - from https://github.com/aws/sagemaker-distribution/blob/main/template/v2/Dockerfile
--
 
 # Using the Classic Studio jupyter lab...
 
@@ -206,4 +219,4 @@ When using custom images, do we have notebook feature?
 
 P: `cp: cannot create regular file '/opt/ml/output/data/Untitled.ipynb': Permission denied`
 
-- ?!
+- some chmod issue with /opt ?!
