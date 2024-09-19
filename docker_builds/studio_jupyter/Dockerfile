@@ -28,7 +28,6 @@ RUN pip install sagemaker-headless-execution-driver
 # install sudo
 RUN yum install --assumeyes sudo which
 RUN echo "${NB_USER} ALL=(ALL) NOPASSWD:ALL" >> /etc/sudoers
-ENV USER=$NB_USER
 
 WORKDIR "/home/${NB_USER}"
 
@@ -37,6 +36,8 @@ RUN ln -s /usr/bin/python3 /usr/bin/python
 
 RUN pip install sagemaker-kernel-wrapper
 
+ENV SM_KERNEL_NAME=python
+ENV USER=$NB_USER
 USER ${NB_UID}
 CMD jupyter lab --ip 0.0.0.0 --port 8888 \
   --ServerApp.base_url="/jupyterlab/default" \
